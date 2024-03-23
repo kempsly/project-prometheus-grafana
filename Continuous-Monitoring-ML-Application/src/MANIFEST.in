@@ -1,13 +1,12 @@
 include *.txt
 include *.md 
 include *.py
-recursive-include ./loan_pred_model/*
+recursive-include ./prediction_model/*
 
-include loan_pred_model/datasets/*.csv
-include loan_pred_model/trained_models/*.pkl
-include loan_pred_model/processing/*.py
-incude loan_pred_model/VERSION
-
+include prediction_model/datasets/*.csv
+include prediction_model/trained_models/*.pkl
+include prediction_model/processing/*.py
+incude prediction_model/VERSION
 include ./tests/*
 
 recursive-exclude * __pycache__

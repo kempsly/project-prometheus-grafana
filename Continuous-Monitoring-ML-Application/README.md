@@ -31,12 +31,12 @@ pip install .
 # Docker Commands
 ```
 docker build -t loan_pred:v1 .
-docker build -t manifoldailearning/cicd:latest . 
-docker push manifoldailearning/cicd:latest
+docker build -t kempsly/loan_cicd:latest . 
+docker push kempsly/loan_cicd:latest
 
-docker run -d -it --name modelv1 -p 8005:8005 manifoldailearning/cicd:latest bash
+docker run -d -it --name modelv1 -p 8005:8005 kempsly/loan_cicd:latest bash
 
-docker exec modelv1 python prediction_model/training_pipeline.py
+docker exec modelv1 python loan_pred_model/training_pipeline.py
 
 docker exec modelv1 pytest -v --junitxml TestResults.xml --cache-clear
 

@@ -1,19 +1,21 @@
-from fastapi import FastAPI 
-from pydantic import BaseModel 
-import uvicorn 
+from fastapi import FastAPI
+import os
+from pydantic import BaseModel
+import uvicorn
 import numpy as np
-import pandas as pd
+import pandas as pd 
 from fastapi.middleware.cors import CORSMiddleware
-from loan_pred_model.predict import generate_predictions 
+from prediction_model.predict import generate_predictions 
+from prometheus_fastapi_instrumentator import Instrumentator
 
-
+port = int(os.environ.get("PORT", 8005))
 app = FastAPI(
-    title= "Jenkins CI-CD Loan Prediction API",
-    description = "CI CD with Jenkins",
-    version ="0.0.1"
+    title="Loan Prediction App using API - CI CD Jenkins",
+    description = "A Simple CI CD Demo",
+    version='1.0'
 )
 
-origins = [
+origins=[
     "*"
 ]
 
@@ -24,7 +26,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
-
 
 class LoanPrediction(BaseModel):
     Gender: str
@@ -38,40 +39,23 @@ class LoanPrediction(BaseModel):
     Loan_Amount_Term: float
     Credit_History: float
     Property_Area: str
-    
-    
-    
 
-@app.get('/')
+
+@app.get("/")
 def index():
-    return {"Message": "Jenkins CI-CD Loan Prediction API"}
+    return {"message":"Welcome to Loan Prediction App API - CI CD Jenkins" }
 
-@app.post('/prediction_api')
+@app.post("/prediction_api")
 def predict(loan_details: LoanPrediction):
-    # Convert incoming data into a Python dictionary
-    data = dict(loan_details)
+    data = loan_details.model_dump()
     prediction = generate_predictions([data])["prediction"][0]
     if prediction == "Y":
         pred = "Approved"
     else:
         pred = "Rejected"
-    
-    return {"status": pred}
+    return {"status":pred}
 
-# Old approach
-# @app.post('/prediction_api')
-# def predict(loan_details: LoanPrediction):
-#     # convert incoming data into python dictionnary
-#     data = loan_details.model_dump()
-#     prediction = generate_predictions([data])["prediction"][0]
-#     if prediction == "Y":
-#         pred = "Approved"
-#     else:
-#         pred = "Rejected"
-    
-#     return {"status": pred}
-
-@app.post('/prediction_ui')
+@app.post("/prediction_ui")
 def predict_gui(Gender: str,
     Married: str,
     Dependents: str,
@@ -100,4 +84,6 @@ def predict_gui(Gender: str,
     return {"status":pred}
 
 if __name__== "__main__":
-    uvicorn.run(app, host="0.0.0.0",port=8005)
+    uvicorn.run("main:app", host="0.0.0.0",port=port,reload=False)
+
+Instrumentator().instrument(app).expose(app)
