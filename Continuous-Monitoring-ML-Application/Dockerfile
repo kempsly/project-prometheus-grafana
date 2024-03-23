@@ -23,6 +23,6 @@ ENV PYTHONPATH "${PYTHONPATH}:/code/src"
 
 CMD pip install -e .
 
-CMD ["python","prediction_model/training_pipeline.py"]
+CMD ["python","loan_pred_model/training_pipeline.py"]
 WORKDIR /code
 CMD ["python","main.py"]
