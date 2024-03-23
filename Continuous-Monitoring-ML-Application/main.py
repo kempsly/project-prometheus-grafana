@@ -5,7 +5,7 @@ import uvicorn
 import numpy as np
 import pandas as pd 
 from fastapi.middleware.cors import CORSMiddleware
-from prediction_model.predict import generate_predictions 
+from loan_pred_model.predict import generate_predictions 
 from prometheus_fastapi_instrumentator import Instrumentator
 
 port = int(os.environ.get("PORT", 8005))
