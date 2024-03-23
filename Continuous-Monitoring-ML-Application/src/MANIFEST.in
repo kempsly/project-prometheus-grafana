@@ -1,0 +1,14 @@
+include *.txt
+include *.md 
+include *.py
+recursive-include ./loan_pred_model/*
+
+include loan_pred_model/datasets/*.csv
+include loan_pred_model/trained_models/*.pkl
+include loan_pred_model/processing/*.py
+incude loan_pred_model/VERSION
+
+include ./tests/*
+
+recursive-exclude * __pycache__
+recursive-exclude * *.py[co]
