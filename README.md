@@ -10,7 +10,7 @@ https://prometheus.io/docs/prometheus/latest/querying/basics/
 ```
 sudo su -
 git clone https://github.com/kempsly/project-prometheus-grafana
-cd project-prometheus-grafana/scripts
+cd project-prometheus-grafana/Prometheus-Grafana/scripts
 
 chmod u=rwx,g=r,o=r 1-install.sh
 ./1-install.sh
