@@ -33,3 +33,5 @@ ENV PYTHONPATH "${PYTHONPATH};/code/src;/code/src/loan_pred_model"
 CMD ["python","loan_pred_model/training_pipeline.py"]
 WORKDIR /code
 CMD ["python","main.py"]
+# Install the package in editable mode and run it
+CMD pip install -e . && python main.py
